@@ -1,8 +1,19 @@
-import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
-import { Subject } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent} from 'angular-calendar';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
+import {Component, ChangeDetectionStrategy, OnInit} from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { CalendarEvent } from 'angular-calendar';
+import {
+  isSameMonth,
+  isSameDay,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  startOfDay,
+  endOfDay,
+  format
+} from 'date-fns';
+import { Observable } from 'rxjs';
 import {DataService} from '../data.service';
 
 const colors: any = {
@@ -24,104 +35,91 @@ const colors: any = {
   }
 };
 
+
+interface Film {
+  id: number;
+  title: string;
+  release_date: string;
+}
+
+const timezoneOffset = new Date().getTimezoneOffset();
+const hoursOffset = String(Math.floor(Math.abs(timezoneOffset / 60))).padStart(
+  2,
+  '0'
+);
+const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
+const direction = timezoneOffset > 0 ? '-' : '+';
+const timezoneOffsetString = `T00:00:00${direction}${hoursOffset}${minutesOffset}`;
+
 @Component({
   selector: 'app-calander-view',
-  templateUrl: './calander-view.component.html',
-  styleUrls: ['./calander-view.component.css']
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './calander-view.component.html'
 })
-export class CalanderViewComponent implements OnInit, AfterViewInit {
-  @ViewChild('modalContent') modalContent: TemplateRef<any>;
-
-  currDay: string;
+export class CalanderViewComponent implements OnInit {
 
   view = 'month';
 
   viewDate: Date = new Date();
 
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
+  events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: colors.green,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
+  activeDayIsOpen = false;
+
+  currDay: string;
+
   rowData = [];
 
-  refresh: Subject<any> = new Subject();
+  constructor(private http: HttpClient, private dataService: DataService) {}
 
-  activeDayIsOpen = true;
-
-  // myObservable = Observable.create((observer: Observer<string>) => {
-  //   observer.next(this.currDay);
-  //   observer.complete();
-  // });
-
-  constructor(private modal: NgbModal, private dataService: DataService) { }
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-    }
-    if (isSameDay(this.viewDate, new Date())) {
-      this.currDay = 'Today';
-    } else {
-      this.currDay = this.viewDate.toDateString().substring(0, 15);
-    }
-    this.dataService.changeDay(this.currDay);
-    // window.scroll(0,0 );
-
+  ngOnInit(): void {
+    this.fetchEvents();
+    this.dataService.currentDate.subscribe(currDay => this.currDay = currDay);
+    this.dataService.currentGridData.subscribe( rowData => this.rowData = rowData);
   }
 
-  eventTimesChanged({
-                      event,
-                      newStart,
-                      newEnd
-                    }: CalendarEventTimesChangedEvent): void {
-    event.start = newStart;
-    event.end = newEnd;
-    this.handleEvent('Dropped or resized', event);
-    this.refresh.next();
-  }
+  fetchEvents(): void {
+    const getStart: any = {
+      month: startOfMonth,
+      week: startOfWeek,
+      day: startOfDay
+    }[this.view];
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    console.log(this.modalData);
+    const getEnd: any = {
+      month: endOfMonth,
+      week: endOfWeek,
+      day: endOfDay
+    }[this.view];
+
+    const params = new HttpParams()
+      .set(
+        'primary_release_date.gte',
+        format(getStart(this.viewDate), 'YYYY-MM-DD')
+      )
+      .set(
+        'primary_release_date.lte',
+        format(getEnd(this.viewDate), 'YYYY-MM-DD')
+      )
+      .set('api_key', '0ec33936a68018857d727958dca1424f');
+
+    this.events$ = this.http
+      .get('https://api.themoviedb.org/3/discover/movie', { params })
+      .pipe(
+        map(({ results }: { results: Film[] }) => {
+          console.log(results);
+          return results.map((film: Film) => {
+            return {
+              title: film.title,
+              start: new Date(film.release_date + timezoneOffsetString),
+              id: film.id,
+              color: colors.blue,
+              meta: {
+                film
+              }
+            };
+          });
+        })
+      );
   }
 
   handleClick(event: any): void {
@@ -129,30 +127,31 @@ export class CalanderViewComponent implements OnInit, AfterViewInit {
     this.dataService.changeGridData(this.rowData);
   }
 
-
-
-
-  // addEvent(): void {
-  //   this.events.push({
-  //     title: 'New event',
-  //     start: startOfDay(new Date()),
-  //     end: endOfDay(new Date()),
-  //     color: colors.red,
-  //     draggable: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true
-  //     }
-  //   });
-  //   this.refresh.next();
-  // }
-
-  ngAfterViewInit() {
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    // if (isSameMonth(date, this.viewDate)) {
+    //   if (
+    //     (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+    //     events.length === 0
+    //   ) {
+    //     this.activeDayIsOpen = false;
+    //   } else {
+    //     this.activeDayIsOpen = true;
+    //     this.viewDate = date;
+    //   }
+    // }
+    this.viewDate = date;
+    if (isSameDay(this.viewDate, new Date())) {
+      this.currDay = 'Today';
+    } else {
+      this.currDay = this.viewDate.toDateString().substring(0, 15);
+    }
+    this.dataService.changeDay(this.currDay);
   }
 
-  ngOnInit() {
-    this.dataService.currentDate.subscribe(currDay => this.currDay = currDay);
-    this.dataService.currentGridData.subscribe( rowData => this.rowData = rowData);
+  eventClicked(event: CalendarEvent<{ film: Film }>): void {
+    window.open(
+      `https://www.themoviedb.org/movie/${event.meta.film.id}`,
+      '_blank'
+    );
   }
-
 }

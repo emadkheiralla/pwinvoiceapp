@@ -1,8 +1,8 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { DataService } from '../data.service';
-import {CalendarEvent, CalendarEventAction} from 'angular-calendar';
-import {Subject} from 'rxjs/index';
+import 'rxjs/add/operator/map';
+import {timeout} from 'q';
 
 const colors: any = {
   red: {
@@ -25,27 +25,33 @@ const colors: any = {
   styleUrls: ['./event-view.component.css']
 })
 
-export class EventViewComponent implements OnInit, AfterViewInit {
+export class EventViewComponent implements OnInit {
+
   currDay: string;
 
   columnDefs = [
     {
       headerName: 'Work Order #',
       field: 'title',
-      width: 541
+      width: 400,
+      suppressSizeToFit: true,
+      cellRenderer: (wo) =>
+        `<a href="#" >${wo.value}</a>`
     },
     {
       headerName: 'Action Item',
-      field: 'start',
-      width: 541
+      field: 'id',
+      width: 1050,
+      suppressSizeToFit: true,
+      cellRenderer: (ai) =>
+        `<a href="#" >${ai.value}</a>`
     }
   ];
 
-  rowData = [];
-  constructor(private dataService: DataService) {
-  }
 
-  ngAfterViewInit() {
+  rowData = [];
+
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {

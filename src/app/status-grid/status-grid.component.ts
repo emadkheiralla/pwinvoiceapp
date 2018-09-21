@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./status-grid.component.css']
 })
 export class StatusGridComponent implements OnInit {
+  private gridApi;
+  private gridColumnApi;
+
   columnDefs = [
     {
       headerName: 'Work Order #',
@@ -138,27 +141,27 @@ export class StatusGridComponent implements OnInit {
         {
           headerName: '',
           field: 'paymentrequest',
-          width: 200
+          width: 100
         },
         {
           headerName: 'Test1',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 100,
+          width: 200,
           filter: 'agNumberColumnFilter'
         },
         {
           headerName: 'Test2',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 100,
+          width: 200,
           filter: 'agNumberColumnFilter'
         },
         {
           headerName: 'Test3',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 100,
+          width: 200,
           filter: 'agNumberColumnFilter'
         }
       ]
@@ -235,6 +238,13 @@ export class StatusGridComponent implements OnInit {
   // }
 
   ngOnInit() {
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+
+    params.api.sizeColumnsToFit();
   }
 
 }

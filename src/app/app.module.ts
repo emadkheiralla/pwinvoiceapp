@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import 'flatpickr/dist/flatpickr.css';
 import { CommonModule } from '@angular/common';
@@ -30,6 +31,12 @@ import { OaResponseComponent } from './oa-response/oa-response.component';
 import { OaFleetComponent } from './oa-fleet/oa-fleet.component';
 import { AllItemsComponent } from './all-items/all-items.component';
 import { DataService} from './home/data.service';
+import { GridInvoiceButtonRendererComponent } from './grid-buttons/grid-invoice-button-renderer/grid-invoice-button-renderer.component';
+import { GridStatusButtonRendererComponent } from './grid-buttons/grid-status-button-renderer/grid-status-button-renderer.component';
+import { GridDocsButtonRendererComponent } from './grid-buttons/grid-docs-button-renderer/grid-docs-button-renderer.component';
+import { GridAcceptRejectButtonRendererComponent } from './grid-buttons/grid-accept-reject-button-renderer/grid-accept-reject-button-renderer.component';
+import { GridTurnbackButtonRendererComponent } from './grid-buttons/grid-turnback-button-renderer/grid-turnback-button-renderer.component';
+import { GridOaButtonRendererComponent } from './grid-buttons/grid-oa-button-renderer/grid-oa-button-renderer.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,7 +49,9 @@ const appRoutes: Routes = [
   { path: 'payreqaccounting', component: PayRequestAccountingComponent },
   { path: 'oafleet', component: OaFleetComponent },
   { path: 'oaresponse', component: OaResponseComponent },
-  { path: 'allitems', component: AllItemsComponent }
+  { path: 'allitems', component: AllItemsComponent },
+  { path: 'statusgrid', component: StatusGridComponent },
+  { path: 'lineitemgrid', component: LineItemGridComponent }
 ];
 
 @NgModule({
@@ -63,18 +72,27 @@ const appRoutes: Routes = [
     PayRequestAccountingComponent,
     OaResponseComponent,
     OaFleetComponent,
-    AllItemsComponent
+    AllItemsComponent,
+    GridInvoiceButtonRendererComponent,
+    GridStatusButtonRendererComponent,
+    GridDocsButtonRendererComponent,
+    GridAcceptRejectButtonRendererComponent,
+    GridTurnbackButtonRendererComponent,
+    GridOaButtonRendererComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     NgbModalModule.forRoot(),
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot(),
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([GridInvoiceButtonRendererComponent,
+      GridStatusButtonRendererComponent, GridDocsButtonRendererComponent, GridAcceptRejectButtonRendererComponent,
+      GridTurnbackButtonRendererComponent, GridOaButtonRendererComponent])
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

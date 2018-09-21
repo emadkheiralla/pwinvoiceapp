@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -6,16 +6,22 @@ import * as $ from 'jquery';
   templateUrl: './nav-panel.component.html',
   styleUrls: ['./nav-panel.component.css']
 })
-export class NavPanelComponent implements OnInit {
+export class NavPanelComponent implements OnInit{
 
   constructor() { }
 
   ngOnInit() {
-    $(document).ready(function() {
-      $('[data-toggle=offcanvas]').click(function() {
-        $('.row-offcanvas').toggleClass('active');
-      });
-    });
+    // $(document).ready(function () {
+    //   $('#sidebar').mCustomScrollbar({
+    //     theme: 'minimal'
+    //   });
+    //
+    //   $('#sidebarCollapse').on('click', function () {
+    //     $('#sidebar, #content').toggleClass('active');
+    //     $('.collapse.in').toggleClass('in');
+    //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    //   });
+    // });
   }
 
 }
