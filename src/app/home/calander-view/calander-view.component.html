@@ -86,7 +86,7 @@
   </ng-template>
 
   <div *ngIf="events$ | async; else loading; let events">
-    <div [ngSwitch]="view" style="width:100%;height:480px;overflow: auto;background-color: #F6F6F6">
+    <div [ngSwitch]="view" style="width:100%;height:480px;overflow: auto;background-color: #F6F6F6; margin-bottom: 20px;">
       <mwl-calendar-month-view
         *ngSwitchCase="'month'"
         [viewDate]="viewDate"

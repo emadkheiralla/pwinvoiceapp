@@ -85,7 +85,7 @@ export class PayRequestAccountingComponent implements OnInit {
 
 function createRowData() {
   const rowData = [];
-  for (let i = 0; i < 0; i++) {
+  for (let i = 0; i < 2; i++) {
     rowData.push({
       row: '18D-ATM10006-1(TT' + i + ')',
       date: new Date('December 17, 1995'),

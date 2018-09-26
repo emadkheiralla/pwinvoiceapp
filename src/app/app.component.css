@@ -58,7 +58,7 @@ a:focus {
 }
 
 #sidebar {
-  width: 320px;
+  width: 15%;
   position: fixed;
   top: 0;
   left: 0;
@@ -70,7 +70,7 @@ a:focus {
 }
 
 #sidebar.active {
-  margin-left: -320px;
+  margin-left: -15%;
 }
 
 #sidebar .sidebar-header {
@@ -151,7 +151,7 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-  width: calc(100% - 320px);
+  width: 85%;
   padding: 40px;
   min-height: 100vh;
   transition: all 0.3s;
@@ -170,7 +170,7 @@ a.article:hover {
 
 @media (max-width: 768px) {
   #sidebar {
-    margin-left: -320px;
+    margin-left: -15%;
   }
   #sidebar.active {
     margin-left: 0;
@@ -179,7 +179,7 @@ a.article:hover {
     width: 100%;
   }
   #content.active {
-    width: calc(100% - 320px);
+    width: 85%;
   }
   #sidebarCollapse span {
     display: none;
