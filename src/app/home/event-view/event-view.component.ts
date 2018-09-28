@@ -40,7 +40,7 @@ export class EventViewComponent implements OnInit {
     },
     {
       headerName: 'Action Item',
-      field: 'id',
+      field: 'action',
       width: 1050,
       suppressSizeToFit: true,
       cellRenderer: (ai) =>

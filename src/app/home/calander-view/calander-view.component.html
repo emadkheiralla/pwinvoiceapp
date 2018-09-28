@@ -85,7 +85,14 @@
     </div>
   </ng-template>
 
-  <div *ngIf="events$ | async; else loading; let events">
+  <ng-template #customCellTemplate let-day="day" let-locale="locale" style="min-height: 10px">
+    <div class="cal-cell-top">
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+      <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+  </ng-template>
+
+  <div *ngIf="asyncEvents$ | async; else loading; let events">
     <div [ngSwitch]="view" style="width:100%;height:480px;overflow: auto;background-color: #F6F6F6; margin-bottom: 20px;">
       <mwl-calendar-month-view
         *ngSwitchCase="'month'"
@@ -93,9 +100,8 @@
         [events]="events"
         [activeDayIsOpen]="activeDayIsOpen"
         (dayClicked)="dayClicked($event.day);handleClick($event)"
-        (eventClicked)="eventClicked($event.event)">
-        <!--(dayClicked)="dayClicked($event.day)"-->
-
+        (eventClicked)="eventClicked($event.event)"
+        [cellTemplate]="customCellTemplate">
       </mwl-calendar-month-view>
       <mwl-calendar-week-view
         *ngSwitchCase="'week'"

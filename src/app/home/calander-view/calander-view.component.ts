@@ -37,9 +37,9 @@ const colors: any = {
 
 
 interface Film {
-  id: number;
   title: string;
-  release_date: string;
+  start: Date;
+  action: string;
 }
 
 const timezoneOffset = new Date().getTimezoneOffset();
@@ -62,7 +62,8 @@ export class CalanderViewComponent implements OnInit {
 
   viewDate: Date = new Date();
 
-  events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+ // events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+  asyncEvents$: Observable<CalendarEvent[]>;
 
   activeDayIsOpen = false;
 
@@ -79,43 +80,33 @@ export class CalanderViewComponent implements OnInit {
   }
 
   fetchEvents(): void {
-    const getStart: any = {
-      month: startOfMonth,
-      week: startOfWeek,
-      day: startOfDay
-    }[this.view];
+    // const getStart: any = {
+    //   month: startOfMonth,
+    //   week: startOfWeek,
+    //   day: startOfDay
+    // }[this.view];
+    //
+    // const getEnd: any = {
+    //   month: endOfMonth,
+    //   week: endOfWeek,
+    //   day: endOfDay
+    // }[this.view];
 
-    const getEnd: any = {
-      month: endOfMonth,
-      week: endOfWeek,
-      day: endOfDay
-    }[this.view];
-
-    const params = new HttpParams()
-      .set(
-        'primary_release_date.gte',
-        format(getStart(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set(
-        'primary_release_date.lte',
-        format(getEnd(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set('api_key', '0ec33936a68018857d727958dca1424f');
-
-    this.events$ = this.http
-      .get('https://api.themoviedb.org/3/discover/movie', { params })
+    this.asyncEvents$ = this.http
+      .get('http://localhost:3000/data')
       .pipe(
-        map(({ results }: { results: Film[] }) => {
-          console.log(results);
+        map((results: Film[]) => {
+          this.rowData = [];
           return results.map((film: Film) => {
+            if (isSameDay(film.start, new Date())) {
+              this.rowData.push(film);
+            }
+            this.dataService.changeGridData(this.rowData);
             return {
               title: film.title,
-              start: new Date(film.release_date + timezoneOffsetString),
-              id: film.id,
+              start: new Date(film.start),
               color: colors.blue,
-              meta: {
-                film
-              }
+              action: film.action
             };
           });
         })
@@ -150,7 +141,7 @@ export class CalanderViewComponent implements OnInit {
 
   eventClicked(event: CalendarEvent<{ film: Film }>): void {
     window.open(
-      `https://www.themoviedb.org/movie/${event.meta.film.id}`,
+      `https://www.themoviedb.org/movie/${event.meta.film}`,
       '_blank'
     );
   }

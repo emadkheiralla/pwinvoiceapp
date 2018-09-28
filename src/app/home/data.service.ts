@@ -7,10 +7,7 @@ export class DataService {
   constructor() {
   }
 
-  rowData = [
-    { 'title': '18D-ATM10006-1(TT1)', 'id': 'Needs Access Work'},
-    { 'title': '06E-ATM10005-2(TU2)', 'id': 'Needs Review'},
-    { 'title': '10F-ATM10004-1(TTA)', 'id': 'Needs Review'}];
+  rowData = [];
 
   private dateSource = new BehaviorSubject<string>('Today');
   currentDate = this.dateSource.asObservable();
