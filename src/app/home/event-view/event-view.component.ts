@@ -33,6 +33,7 @@ export class EventViewComponent implements OnInit {
     {
       headerName: 'Work Order #',
       field: 'title',
+      cellStyle: {fontSize: '16px'},
       width: 400,
       suppressSizeToFit: true,
       cellRenderer: (wo) =>
@@ -41,6 +42,7 @@ export class EventViewComponent implements OnInit {
     {
       headerName: 'Action Item',
       field: 'action',
+      cellStyle: {fontSize: '16px'},
       width: 1050,
       suppressSizeToFit: true,
       cellRenderer: (ai) =>

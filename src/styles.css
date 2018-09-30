@@ -65,7 +65,7 @@ a, a:hover, a:focus {
 }
 
 #sidebar .sidebar-header {
-  padding: 20px;
+  /*padding: 20px;*/
   background: #457AB2;
 }
 
@@ -81,7 +81,7 @@ a, a:hover, a:focus {
 
 #sidebar ul li a {
   padding: 10px;
-  font-size: 1.1em;
+  font-size: 1.37em;
   display: block;
 }
 #sidebar ul li a:hover {
