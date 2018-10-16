@@ -36,7 +36,7 @@ const colors: any = {
 };
 
 
-interface Film {
+interface Invoice {
   title: string;
   start: Date;
   action: string;
@@ -62,7 +62,7 @@ export class CalanderViewComponent implements OnInit {
 
   viewDate: Date = new Date();
 
- // events$: Observable<Array<CalendarEvent<{ film: Film }>>>;
+ // events$: Observable<Array<CalendarEvent<{ invoice: Invoice }>>>;
   asyncEvents$: Observable<CalendarEvent[]>;
 
   activeDayIsOpen = false;
@@ -95,18 +95,18 @@ export class CalanderViewComponent implements OnInit {
     this.asyncEvents$ = this.http
       .get('http://localhost:3000/data')
       .pipe(
-        map((results: Film[]) => {
+        map((results: Invoice[]) => {
           this.rowData = [];
-          return results.map((film: Film) => {
-            if (isSameDay(film.start, new Date())) {
-              this.rowData.push(film);
+          return results.map((invoice: Invoice) => {
+            if (isSameDay(invoice.start, new Date())) {
+              this.rowData.push(invoice);
             }
             this.dataService.changeGridData(this.rowData);
             return {
-              title: film.title,
-              start: new Date(film.start),
+              title: invoice.title,
+              start: new Date(invoice.start),
               color: colors.blue,
-              action: film.action
+              action: invoice.action
             };
           });
         })
@@ -139,9 +139,9 @@ export class CalanderViewComponent implements OnInit {
     this.dataService.changeDay(this.currDay);
   }
 
-  eventClicked(event: CalendarEvent<{ film: Film }>): void {
+  eventClicked(event: CalendarEvent<{ invoice: Invoice }>): void {
     window.open(
-      `https://www.themoviedb.org/movie/${event.meta.film}`,
+      `https://www.themoviedb.org/movie/${event.meta.invoice}`,
       '_blank'
     );
   }
