@@ -23,33 +23,28 @@ export class InvoiceReviewComponent implements OnInit {
         headerName: 'View Invoice',
         field: 'row',
         cellRenderer: 'gridInvoiceButton',
-        colId: 'params',
-        width: 60
+        colId: 'params'
       },
       {
         headerName: 'View Status',
         field: 'row',
         cellRenderer: 'gridStatusButton',
-        colId: 'params',
-        width: 50
+        colId: 'params'
       },
       {
         headerName: 'Work Order Number',
-        field: 'row',
-        width: 80
+        field: 'row'
       },
       {
         headerName: 'Due Date',
         field: 'date',
         editable: true,
-        colId: 'square',
-        width: 150
+        colId: 'square'
       },
       {
         headerName: 'Type',
         field: 'type',
-        colId: 'cube',
-        width: 100
+        colId: 'cube'
       }
     ];
     this.rowData = createRowData();
@@ -75,7 +70,6 @@ export class InvoiceReviewComponent implements OnInit {
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
     params.api.sizeColumnsToFit();
   }
 

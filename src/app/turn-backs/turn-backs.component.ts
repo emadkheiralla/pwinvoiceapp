@@ -23,39 +23,33 @@ export class TurnBacksComponent {
         headerName: 'View Invoice',
         field: 'row',
         cellRenderer: 'gridInvoiceButton',
-        colId: 'params',
-        width: 100
+        colId: 'params'
       },
       {
         headerName: 'View Status',
         field: 'row',
         cellRenderer: 'gridStatusButton',
-        colId: 'params',
-        width: 70
+        colId: 'params'
       },
       {
         headerName: 'Work Order Number',
-        field: 'row',
-        width: 150
+        field: 'row'
       },
       {
         headerName: 'Due Date',
         field: 'date',
         editable: true,
-        colId: 'square',
-        width: 300
+        colId: 'square'
       },
       {
         headerName: 'Type',
         field: 'type',
-        colId: 'cube',
-        width: 70
+        colId: 'cube'
       },
       {
         headerName: 'View Turnback',
         cellRenderer: 'gridViewTurnbackButton',
-        colId: 'params',
-        width: 120
+        colId: 'params'
       }
 
     ];

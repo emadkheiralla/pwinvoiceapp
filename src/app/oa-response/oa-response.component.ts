@@ -24,39 +24,33 @@ export class OaResponseComponent {
         headerName: 'View Invoice',
         field: 'row',
         cellRenderer: 'gridInvoiceButton',
-        colId: 'params',
-        width: 70
+        colId: 'params'
       },
       {
         headerName: 'View Status',
         field: 'row',
         cellRenderer: 'gridStatusButton',
-        colId: 'params',
-        width: 60
+        colId: 'params'
       },
       {
         headerName: 'Work Order Number',
-        field: 'row',
-        width: 100
+        field: 'row'
       },
       {
         headerName: 'Due Date',
         field: 'date',
         editable: true,
-        colId: 'square',
-        width: 250
+        colId: 'square'
       },
       {
         headerName: 'Type',
         field: 'type',
-        colId: 'cube',
-        width: 50
+        colId: 'cube'
       },
       {
         headerName: 'View O&A',
         cellRenderer: 'gridViewOAButton',
-        colId: 'params',
-        width: 100
+        colId: 'params'
       }
     ];
     this.rowData = createRowData();

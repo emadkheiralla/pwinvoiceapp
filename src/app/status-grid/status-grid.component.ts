@@ -9,6 +9,9 @@ import { HttpClient } from '@angular/common/http';
 export class StatusGridComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
+  private defaultColDef;
+  private defaultColGroupDef;
+  private columnTypes;
 
   columnDefs = [
     {
@@ -16,152 +19,294 @@ export class StatusGridComponent implements OnInit {
       children: [
         {
           headerName: '',
-          field: 'woNum',
-          width: 200
+          field: 'woNum'
         },
         {
-          headerName: 'Test1',
+          headerName: 'ESN',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test2',
+          headerName: 'Operator Code',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test3',
+          headerName: 'Engine Model',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 100,
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Engine Type',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'FOD',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Removal Reason',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Customer Contract',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Eagledata Event ID',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Event Type',
+          columnGroupShow: 'open',
+          field: 'bronze',
           filter: 'agNumberColumnFilter'
         }
       ]
     },
     {
-      headerName: 'Invoice Receipt Review',
+      headerName: 'Invoice Type',
       children: [
         {
           headerName: '',
-          field: 'invoiceRR',
-          width: 200
+          field: 'invoiceRR'
         },
         {
-          headerName: 'Test1',
+          headerName: 'Shop Code',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test2',
+          headerName: 'Invoice Number',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test3',
+          headerName: 'Invoice Amount',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 100,
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'PO Number',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Analyst',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'General Notes',
+          columnGroupShow: 'open',
+          field: 'bronze',
           filter: 'agNumberColumnFilter'
         }
       ]
     },
     {
-      headerName: 'Turnback',
+      headerName: 'Pre-Invoice',
       children: [
         {
           headerName: '',
-          field: 'turnback',
-          width: 200
+          field: 'turnback'
         },
         {
-          headerName: 'Test1',
+          headerName: 'Induction Date',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test2',
+          headerName: 'Engine Ship Date',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test3',
+          headerName: 'Gate 1 Actual',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 100,
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Est. Due Date',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Customer Est. Amount',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Date Sent to FM',
+          columnGroupShow: 'open',
+          field: 'bronze',
           filter: 'agNumberColumnFilter'
         }
       ]
     },
     {
-      headerName: 'Clockstart',
+      headerName: 'Review',
       children: [
         {
           headerName: '',
-          field: 'clockstart',
-          width: 200
+          field: 'clockstart'
         },
         {
-          headerName: 'Test1',
+          headerName: 'Invoice Received',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test2',
+          headerName: 'Complete Package',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test3',
+          headerName: 'Invoice Complete Sent',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 100,
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Total',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Due Date',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'TB Sent',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'TB Returned',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'TB Resent',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Resolution',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Agreed Credit',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Agreed Credit Received',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'TB Affects EXW',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Supplemental Affects EXW',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Notes',
+          columnGroupShow: 'open',
+          field: 'bronze',
           filter: 'agNumberColumnFilter'
         }
       ]
     },
     {
-      headerName: 'Payment Request',
+      headerName: 'Payment',
       children: [
         {
           headerName: '',
-          field: 'paymentrequest',
-          width: 100
+          field: 'paymentrequest'
         },
         {
-          headerName: 'Test1',
+          headerName: 'Clock Start',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 200,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test2',
+          headerName: 'CS Sent',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 200,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test3',
+          headerName: 'Due Date',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 200,
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Amount',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Request for Signature',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Payment Auth Sent',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Notes',
+          columnGroupShow: 'open',
+          field: 'bronze',
           filter: 'agNumberColumnFilter'
         }
       ]
@@ -171,29 +316,165 @@ export class StatusGridComponent implements OnInit {
       children: [
         {
           headerName: '',
-          field: 'oa',
-          width: 200
+          field: 'oa'
         },
         {
-          headerName: 'Test1',
+          headerName: 'Target Due Date',
           columnGroupShow: 'open',
           field: 'gold',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test2',
+          headerName: 'Contract Due Date',
           columnGroupShow: 'open',
           field: 'silver',
-          width: 100,
           filter: 'agNumberColumnFilter'
         },
         {
-          headerName: 'Test3',
+          headerName: 'Amount',
           columnGroupShow: 'open',
           field: 'bronze',
-          width: 100,
           filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'EXW Sent',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'FM Reply',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Analyst Response',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Metrics Exclude Reason',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Metrics Exclude Open',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Metrics Exclude Closed',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Notes',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        }
+      ]
+    },
+    {
+      headerName: 'Credit',
+      children: [
+        {
+          headerName: '',
+          field: 'oa'
+        }
+      ]
+    },
+    {
+      headerName: 'Dispute',
+      children: [
+        {
+          headerName: '',
+          field: 'oa'
+        },
+        {
+          headerName: '90 Days',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Paid Short',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Dispute Amount',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Dispute Open',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Dispute Settled',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Credit Amount',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Credit Received',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Payment Amount',
+          columnGroupShow: 'open',
+          field: 'silver',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Request for Signature',
+          columnGroupShow: 'open',
+          field: 'bronze',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Payment Auth. Sent',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        },
+        {
+          headerName: 'Notes',
+          columnGroupShow: 'open',
+          field: 'gold',
+          filter: 'agNumberColumnFilter'
+        }
+      ]
+    },
+    {
+      headerName: 'Misc',
+      children: [
+        {
+          headerName: '',
+          field: 'oa'
+        },
+        {
+          headerName: 'Late Invoice Reason',
+          field: 'oa',
+          columnGroupShow: 'open'
         }
       ]
     }
@@ -203,25 +484,7 @@ export class StatusGridComponent implements OnInit {
     { woNum: '18D-ATM10006-1(TT1)', invoiceRR: 'Aug 09, 2018', turnback: 'Aug 20, 2018', clockstart: 'Sep 01, 2018',
       paymentrequest: 'Oct 09, 2018', oa: 'Nov 20, 2018' },
     { woNum: '06E-ATM10005-2(TU2)', invoiceRR: 'Aug 13, 2018', turnback: 'Aug 24, 2018', clockstart: 'Sep 06, 2018',
-      paymentrequest: 'Oct 16, 2018', oa: 'Nov 03, 2018' },
-    { woNum: '10F-ATM10004-1(TTA)', invoiceRR: 'Aug 03, 2018', turnback: 'Aug 14, 2018', clockstart: 'Sep 18, 2018',
-      paymentrequest: 'Oct 29, 2018', oa: 'Nov 17, 2018' },
-    { woNum: '05A-ATM10001-1(AG1)', invoiceRR: 'Aug 10, 2018', turnback: 'Aug 21, 2018', clockstart: 'Sep 25, 2018',
-      paymentrequest: 'Oct 04, 2018', oa: 'Nov 24, 2018' },
-    { woNum: '06D-ATM10003-2(UBU)', invoiceRR: 'Aug 05, 2018', turnback: 'Aug 16, 2018', clockstart: 'Sep 29, 2018',
-      paymentrequest: 'Oct 18, 2018', oa: 'Nov 13, 2018' },
-    { woNum: '11F-ATM10002-1(NTY)', invoiceRR: 'Aug 11, 2018', turnback: 'Aug 19, 2018', clockstart: 'Sep 16, 2018',
-      paymentrequest: 'Oct 14, 2018', oa: 'Nov 18, 2018' },
-    { woNum: '09D-ATM10007-2(AG1)', invoiceRR: 'Aug 02, 2018', turnback: 'Aug 08, 2018', clockstart: 'Sep 13, 2018',
-      paymentrequest: 'Oct 05, 2018', oa: 'Nov 06, 2018' },
-    { woNum: '17E-ATM10008-1(TTA)', invoiceRR: 'Aug 09, 2018', turnback: 'Aug 15, 2018', clockstart: 'Sep 04, 2018',
-      paymentrequest: 'Oct 22, 2018', oa: 'Nov 22, 2018' },
-    { woNum: '18E-ATM10009-2(UBU)', invoiceRR: 'Aug 12, 2018', turnback: 'Aug 19, 2018', clockstart: 'Sep 02, 2018',
-      paymentrequest: 'Oct 02, 2018', oa: 'Nov 29, 2018' },
-    { woNum: '16F-ATM10010-2(TT1)', invoiceRR: 'Aug 20, 2018', turnback: 'Aug 28, 2018', clockstart: 'Sep 08, 2018',
-      paymentrequest: 'Oct 01, 2018', oa: 'Nov 19, 2018' },
-    { woNum: '17A-ATM10011-1(TTA)', invoiceRR: 'Aug 16, 2018', turnback: 'Aug 24, 2018', clockstart: 'Sep 15, 2018',
-      paymentrequest: 'Oct 06, 2018', oa: 'Nov 05, 2018' }
+      paymentrequest: 'Oct 16, 2018', oa: 'Nov 03, 2018' }
   ];
 
   constructor() {

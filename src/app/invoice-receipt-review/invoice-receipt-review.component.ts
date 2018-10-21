@@ -24,54 +24,40 @@ export class InvoiceReceiptReviewComponent {
         headerName: 'View Invoice',
         field: 'row',
         cellRenderer: 'gridInvoiceButton',
-        colId: 'params',
-        width: 150,
-        suppressSizeToFit: true
+        colId: 'params'
 
       },
       {
         headerName: 'View Status',
         field: 'row',
         cellRenderer: 'gridStatusButton',
-        colId: 'params',
-        suppressSizeToFit: true,
-        width: 120
+        colId: 'params'
       },
       {
         headerName: 'Work Order Number',
-        field: 'row',
-        suppressSizeToFit: true,
-        width: 200
+        field: 'row'
       },
       {
         headerName: 'Due Date',
         field: 'date',
         editable: true,
-        colId: 'square',
-        suppressSizeToFit: true,
-        width: 500
+        colId: 'square'
       },
       {
         headerName: 'Type',
         field: 'type',
-        colId: 'cube',
-        suppressSizeToFit: true,
-        width: 100
+        colId: 'cube'
       },
       {
         headerName: 'View Docs',
         cellRenderer: 'gridViewDocsButton',
-        colId: 'params',
-        suppressSizeToFit: true,
-        width: 180
+        colId: 'params'
       },
       {
         headerName: 'Accept/Reject',
         field: 'value',
         cellRenderer: 'gridAcceptRejectButton',
-        colId: 'params',
-        suppressSizeToFit: true,
-        width: 180
+        colId: 'params'
       }
     ];
     this.rowData = createRowData();
