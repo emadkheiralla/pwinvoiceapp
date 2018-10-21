@@ -22,6 +22,7 @@ export class InvoiceReceiptReviewComponent {
     this.columnDefs = [
       {
         headerName: 'View Invoice',
+        cellStyle: {fontSize: '14px'},
         field: 'row',
         cellRenderer: 'gridInvoiceButton',
         colId: 'params'
@@ -30,33 +31,39 @@ export class InvoiceReceiptReviewComponent {
       {
         headerName: 'View Status',
         field: 'row',
+        cellStyle: {fontSize: '14px'},
         cellRenderer: 'gridStatusButton',
         colId: 'params'
       },
       {
         headerName: 'Work Order Number',
+        cellStyle: {fontSize: '14px'},
         field: 'row'
       },
       {
         headerName: 'Due Date',
         field: 'date',
-        editable: true,
+        suppressSizeToFit: true,
+        cellStyle: {fontSize: '14px'},
         colId: 'square'
       },
       {
         headerName: 'Type',
+        cellStyle: {fontSize: '14px'},
         field: 'type',
         colId: 'cube'
       },
       {
         headerName: 'View Docs',
         cellRenderer: 'gridViewDocsButton',
+        cellStyle: {fontSize: '14px'},
         colId: 'params'
       },
       {
         headerName: 'Accept/Reject',
         field: 'value',
         cellRenderer: 'gridAcceptRejectButton',
+        cellStyle: {fontSize: '14px'},
         colId: 'params'
       }
     ];
