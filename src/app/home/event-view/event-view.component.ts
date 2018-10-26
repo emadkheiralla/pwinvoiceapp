@@ -27,6 +27,9 @@ const colors: any = {
 
 export class EventViewComponent implements OnInit {
 
+  private gridApi;
+  private gridColumnApi;
+
   currDay: string;
 
   columnDefs = [
@@ -34,8 +37,6 @@ export class EventViewComponent implements OnInit {
       headerName: 'Work Order #',
       field: 'title',
       cellStyle: {fontSize: '14px'},
-      width: 500,
-      suppressSizeToFit: true,
       cellRenderer: (wo) =>
         `<a href="#" >${wo.value}</a>`
     },
@@ -43,8 +44,6 @@ export class EventViewComponent implements OnInit {
       headerName: 'Action Item',
       field: 'action',
       cellStyle: {fontSize: '14px'},
-      width: 1150,
-      suppressSizeToFit: true,
       cellRenderer: (ai) =>
         `<a href="#" >${ai.value}</a>`
     }
@@ -59,5 +58,10 @@ export class EventViewComponent implements OnInit {
   ngOnInit() {
     this.dataService.currentDate.subscribe(currDay => this.currDay = currDay);
     this.dataService.currentGridData.subscribe( rowData => this.rowData = rowData);
+  }
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    params.api.sizeColumnsToFit();
   }
 }
