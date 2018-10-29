@@ -1,22 +1,11 @@
-<div class="col-xs-12 col-sm-10 col-md-12"
-     style="background-color:white; border: 1px solid #457AB2;padding: 10px;">
+<div class="col-xs-12 col-sm-10 col-md-12" style="background-color:green; border: 1px solid #457AB2;padding: 8px;">
   <div class="panel panel-primary">
     <div class="panel-heading text-center">Status Grid
     </div>
     <div class="panel-body" style="border-bottom: 0.2px solid #457AB2; border-left: 0.2px solid #457AB2; border-right: 0.2px solid #457AB2; background-color: #E0EBF6;">
-      <ag-grid-angular
-        #agGrid
-        enableColResize
-        style="width: initial; height: 570px;"
-        class="ag-theme-blue"
-        [enableFilter]="true"
-        [enableSorting]="true"
-        [enableColResize]="true"
-        [debug]="true"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"
-        (gridReady)="onGridReady($event)"
-      ></ag-grid-angular>
+      <ag-grid-angular #agGrid enableColResize style="width: initial; height: 263px;" class="ag-theme-blue"
+        [enableFilter]="true" [enableSorting]="true" [enableColResize]="true" [debug]="true" [rowData]="rowData"
+        [columnDefs]="columnDefs" (gridReady)="onGridReady($event)"></ag-grid-angular>
     </div>
   </div>
 </div>
