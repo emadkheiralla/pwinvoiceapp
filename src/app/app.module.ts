@@ -4,8 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import 'flatpickr/dist/flatpickr.css';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap/modal/modal.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { AgGridModule } from 'ag-grid-angular';
 
@@ -17,6 +17,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { TurnBacksComponent } from './turn-backs/turn-backs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { CalendarModule } from 'angular-calendar';
 import { StatusGridComponent } from './status-grid/status-grid.component';
 import { LineItemGridComponent } from './line-item-grid/line-item-grid.component';
@@ -30,13 +31,16 @@ import { PayRequestAccountingComponent } from './pay-request-accounting/pay-requ
 import { OaResponseComponent } from './oa-response/oa-response.component';
 import { OaFleetComponent } from './oa-fleet/oa-fleet.component';
 import { AllItemsComponent } from './all-items/all-items.component';
-import { DataService} from './home/data.service';
+import { DataService } from './home/data.service';
 import { GridInvoiceButtonRendererComponent } from './grid-buttons/grid-invoice-button-renderer/grid-invoice-button-renderer.component';
 import { GridStatusButtonRendererComponent } from './grid-buttons/grid-status-button-renderer/grid-status-button-renderer.component';
 import { GridDocsButtonRendererComponent } from './grid-buttons/grid-docs-button-renderer/grid-docs-button-renderer.component';
+// tslint:disable-next-line:max-line-length
 import { GridAcceptRejectButtonRendererComponent } from './grid-buttons/grid-accept-reject-button-renderer/grid-accept-reject-button-renderer.component';
 import { GridTurnbackButtonRendererComponent } from './grid-buttons/grid-turnback-button-renderer/grid-turnback-button-renderer.component';
 import { GridOaButtonRendererComponent } from './grid-buttons/grid-oa-button-renderer/grid-oa-button-renderer.component';
+import { AddModalComponent } from './status-grid/add-modal/add-modal.component';
+
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -78,16 +82,20 @@ const appRoutes: Routes = [
     GridDocsButtonRendererComponent,
     GridAcceptRejectButtonRendererComponent,
     GridTurnbackButtonRendererComponent,
-    GridOaButtonRendererComponent
+    GridOaButtonRendererComponent,
+    AddModalComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
-    NgbModalModule.forRoot(),
+    NgbModule.forRoot(),
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot(),
     AgGridModule.withComponents([GridInvoiceButtonRendererComponent,

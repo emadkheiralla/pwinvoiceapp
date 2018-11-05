@@ -1,0 +1,145 @@
+<div style="height: 30px; margin-bottom: 15px;">
+  <button type="button" class="btn btn-primary" (click)="open(content)">Add</button>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header" style="background-color:#457AB2; border-bottom:1px solid rgba(0,0,0,.125); border-radius: 0; color: #fff">
+    <h6 class="modal-title" id="modal-basic-title">Add New Invoice Status Entry</h6>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true" style="color: #fff;">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="background-color:beige;">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" id="msg">
+        <input type="text" #someVar placeholder="Choose an ESN" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <div class="container" [hidden]="someVar.value == ''" style="padding-top:10px;background-color: white;border:1px solid #457AB2;">
+      <ag-grid-angular #agGrid enableColResize style="width: initial; height: 120px;" class="ag-theme-blue" [enableFilter]="true"
+        [enableSorting]="true" [enableColResize]="true" [debug]="true" [rowData]="modalRowData" [columnDefs]="modalColumnDefs"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+      <form style="padding-top:10px; margin-bottom:10px; margin-top:10px; border:1px solid #9bc2e6; background-color:#E0EBF6;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="esn">
+                <span class="badge badge-primary">ESN</span>&nbsp;&nbsp;</label>
+              <input type="text" name="esn" id="esn" style="width:100px;">
+            </div>
+            <div class="col-md-3">
+              <label for="induction">
+                <span class="badge badge-primary">Induction</span>&nbsp;&nbsp;</label>
+              <input type="text" name="induction" id="induction" style="width:60px;">
+            </div>
+            <div class="col-md-3">
+              <label for="engine">
+                <span class="badge badge-primary">Engine</span>&nbsp;&nbsp;</label>
+              <input type="text" name="engine" id="engine" style="width:80px;">
+            </div>
+            <div class="col-md-3">
+              <label for="model">
+                <span class="badge badge-primary">Model</span>&nbsp;&nbsp;</label>
+              <input type="text" name="model" id="model" style="width:83px;">
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="engineshipdate">
+                <span class="badge badge-primary">Engine Ship Date</span>&nbsp;&nbsp;</label>
+              <input type="text" name="engineshipdate" id="engineshipdate" style="width:88px;">
+            </div>
+            <div class="col-md-4">
+              <label for="shopdat">
+                <span class="badge badge-primary">Shop/DAT</span>&nbsp;&nbsp;</label>
+              <select name="shopdat" id="shopdat" style="width:125px;"></select>
+            </div>
+            <div class="col-md-4">
+              <label for="operator">
+                <span class="badge badge-primary">Operator</span>&nbsp;&nbsp;</label>
+              <select name="operator" id="operator" style="width:127px;"></select>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="iaeworkorder">
+                <span class="badge badge-primary">IAE Work Order/SMI</span>&nbsp;&nbsp;</label>
+              <select name="iaeworkorder" id="iaeworkorder" style="width:73px;"></select>
+            </div>
+            <div class="col-md-3">
+              <label for="customercontract">
+                <span class="badge badge-primary">Customer</span>&nbsp;&nbsp;</label>
+              <select name="customercontract" id="customercontract" style="width:70px;"></select>
+            </div>
+            <div class="col-md-3" style="padding-right:0;">
+              <label for="type">
+                <span class="badge badge-primary">Invoice Type</span>&nbsp;&nbsp;</label>
+              <select name="invoicetype" id="invoicetype" style="width:70px;"></select>
+            </div>
+            <div class="col-md-2">
+              <label for="fod" style="padding-left:22px;">
+                <span class="badge badge-primary">FOD</span>&nbsp;&nbsp;</label>
+              <input type="checkbox" name="fod" id="fod">
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="iaeworkorder">
+                <span class="badge badge-primary">Event Type</span>&nbsp;&nbsp;</label>
+              <select name="eventtype" id="eventtype" style="width:70px;"></select>
+              <label for="fod" style="padding-left:5px;">
+                <span class="badge badge-primary">CP?</span>&nbsp;&nbsp;</label>
+              <input type="checkbox" name="pc" id="pc">
+              <label for="iaeworkorder">
+                <span class="badge badge-primary">Invoice Received</span>&nbsp;&nbsp;</label>
+              <input type="text" name="invoicereceived" id="invoicereceived" style="width:90px;">
+            </div>
+            <div class="col-md-4">
+              <label for="customercontract" style="float:left;">
+                <span class="badge badge-primary">Notes</span>&nbsp;&nbsp;</label>
+              <textarea name="notes" id="notes" style="width:70%;"></textarea>
+            </div>
+            <div class="col-md-4">
+              <label for="customercontract" style="float:left;">
+                <span class="badge badge-primary">RR/ED</span>&nbsp;&nbsp;</label>
+              <textarea name="rred" id="rred" style="width:70%;"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="iaeworkorder">
+                <span class="badge badge-primary">Invoice Complete</span>&nbsp;&nbsp;</label>
+              <select name="invoicecomplete" id="invoicecomplete" style="width:86px;"></select>
+            </div>
+            <div class="col-md-4">
+              <label for="customercontract">
+                <span class="badge badge-primary">Invoice Amount</span>&nbsp;&nbsp;</label>
+              <select name="invoiceamt" id="invoiceamt" style="width:87px;"></select>
+            </div>
+            <div class="col-md-4">
+              <label for="type">
+                <span class="badge badge-primary">Invoice Number</span>&nbsp;&nbsp;</label>
+              <select name="invoicenum" id="invoicenum" style="width:87px;"></select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer" style="background-color:beige; border-top:1px solid rgba(0,0,0,.125);">
+    <button type="button" class="btn" (click)="c('Save click')" style="background-color: #457AB2; color:#fff; border:1px solid rgba(0,0,0,.125);">Save</button>
+  </div>
+</ng-template>

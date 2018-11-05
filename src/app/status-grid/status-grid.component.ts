@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-status-grid',
@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./status-grid.component.css']
 })
 export class StatusGridComponent implements OnInit {
+
   private gridApi;
   private gridColumnApi;
   private defaultColDef;
@@ -481,14 +482,25 @@ export class StatusGridComponent implements OnInit {
   ];
 
   rowData = [
-    { woNum: '18D-ATM10006-1(TT1)', invoiceRR: 'Aug 09, 2018', turnback: 'Aug 20, 2018', clockstart: 'Sep 01, 2018',
-      paymentrequest: 'Oct 09, 2018', oa: 'Nov 20, 2018' },
-    { woNum: '06E-ATM10005-2(TU2)', invoiceRR: 'Aug 13, 2018', turnback: 'Aug 24, 2018', clockstart: 'Sep 06, 2018',
-      paymentrequest: 'Oct 16, 2018', oa: 'Nov 03, 2018' }
+    {
+      woNum: '18D-ATM10006-1(TT1)', invoiceRR: 'Aug 09, 2018', turnback: 'Aug 20, 2018', clockstart: 'Sep 01, 2018',
+      paymentrequest: 'Oct 09, 2018', oa: 'Nov 20, 2018'
+    },
+    {
+      woNum: '06E-ATM10005-2(TU2)', invoiceRR: 'Aug 13, 2018', turnback: 'Aug 24, 2018', clockstart: 'Sep 06, 2018',
+      paymentrequest: 'Oct 16, 2018', oa: 'Nov 03, 2018'
+    }
   ];
 
-  constructor() {
+
+  ngOnInit() {
+
   }
+  constructor() {
+
+  }
+
+
   // onGridReady(params) {
   //   this.gridApi = params.api;
   //   this.gridColumnApi = params.columnApi;
@@ -500,8 +512,6 @@ export class StatusGridComponent implements OnInit {
   //     });
   // }
 
-  ngOnInit() {
-  }
 
   onGridReady(params) {
     this.gridApi = params.api;

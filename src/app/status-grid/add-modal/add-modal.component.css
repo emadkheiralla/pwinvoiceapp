@@ -1,0 +1,25 @@
+.ag-theme-balham .ag-header-group-cell-label span {
+  float: right;
+}
+
+.badge {
+  background-color: #457AB2;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.modal {
+  z-index: 9998;
+}
+
+.cdk-overlay-container {
+  z-index: 9999;
+}

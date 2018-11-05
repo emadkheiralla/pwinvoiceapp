@@ -2,7 +2,11 @@
 /*
     DEMO STYLE
 */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+.cdk-overlay-container {z-index: 999999 !important;}
 
 
 body {
@@ -80,9 +84,15 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul li a {
-  padding: 10px;
+  padding: 5px;
   display: block;
+  width: 100%;
 }
+
+#sidebar[_ngcontent-c2] li[_ngcontent-c2] {
+ width:100%;
+}
+
 #sidebar ul li a:hover {
   color: #457AB2;
   background: #E2EBF5;
