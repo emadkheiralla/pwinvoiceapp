@@ -1,0 +1,36 @@
+<div class="container">
+  <div id="login" class="signin-card">
+    <h1 class="display1">Login</h1>
+    <div class="logo-image">
+      <img src="../../assets/images/main.png" alt="Logo" title="Logo" width="138">
+    </div>
+    <form style="padding-top:20px" name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+      <div id="form-login-username" class="form-group">
+        <input id="username" class="form-control" name="username" type="text" size="18" alt="login" [(ngModel)]="form.username" #username="ngModel"
+          required />
+        <span class="form-highlight"></span>
+        <span class="form-bar"></span>
+        <label for="username" class="float-label">username</label>
+      </div>
+      <div id="form-login-password" class="form-group">
+        <input id="passwd" class="form-control" name="password" type="password" size="18" alt="password" [(ngModel)]="form.password"
+          #password="ngModel" required minlength="6">
+        <span class="form-highlight"></span>
+        <span class="form-bar"></span>
+        <label for="password" class="float-label">password</label>
+      </div>
+      <div id="form-login-remember" class="form-group">
+        <div class="checkbox checkbox-default">
+          <input id="remember" type="checkbox" value="yes" alt="Remember me" class="">
+          <label for="remember" style="padding-left:5px;">Remember me</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">Login</button>
+        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger">
+          Login failed: {{errorMessage}}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

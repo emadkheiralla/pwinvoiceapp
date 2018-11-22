@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { LoginService } from '../login-page/login.service';
+import { SidebarService } from '../header/sidebar.service';
+
 import * as $ from 'jquery';
 
 @Component({
@@ -8,20 +11,16 @@ import * as $ from 'jquery';
 })
 export class NavPanelComponent implements OnInit{
 
-  constructor() { }
+  loggedIn: boolean;
+
+  sidebarOpen: boolean;
+
+
+  constructor(private loginService: LoginService, private sidebarService: SidebarService) { }
 
   ngOnInit() {
-    // $(document).ready(function () {
-    //   $('#sidebar').mCustomScrollbar({
-    //     theme: 'minimal'
-    //   });
-    //
-    //   $('#sidebarCollapse').on('click', function () {
-    //     $('#sidebar, #content').toggleClass('active');
-    //     $('.collapse.in').toggleClass('in');
-    //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-    //   });
-    // });
+    this.loginService.logIn.subscribe(loggedIn => this.loggedIn = loggedIn);
+    this.sidebarService.currentSidebar.subscribe(sidebar => this.sidebarOpen = sidebar);
   }
 
 }

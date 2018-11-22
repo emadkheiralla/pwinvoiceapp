@@ -7,19 +7,25 @@
 }
 
 .example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+  min-width: fit-content;
+  max-width: fit-content;
 }
 
 .example-full-width {
   width: 100%;
 }
 
-.modal {
-  z-index: 9998;
+label {
+  overflow: hidden;
 }
 
-.cdk-overlay-container {
-  z-index: 9999;
+
+.container {
+  margin-bottom: 8px;
 }
+
+div.modal-body {
+  padding-bottom: 0;
+}
+
+

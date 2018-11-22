@@ -1,24 +1,34 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { LoginService } from './login-page/login.service';
+
 import * as $ from 'jquery';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'pratt-whitney-invoice-app';
+  loggedIn: boolean;
+
+  constructor(private loginService: LoginService) {
+  }
+
+  ngOnInit() {
+    this.loginService.logIn.subscribe(loggedIn => this.loggedIn = loggedIn);
+    if (!this.loggedIn) {
+      document.getElementById('content').style.width = '100%';
+    }
+  }
 
   ngAfterViewInit() {
-    $(document).ready(function () {
-      // $('#sidebar').mCustomScrollbar({
-      //   theme: 'minimal'
-      // });
+    // $(document).ready(function () {
+    //   // $('#sidebar').mCustomScrollbar({
+    //   //   theme: 'minimal'
+    //   // });
 
-      $('#sidebarCollapse').on('click', function () {
-        $('#sidebar, #content').toggleClass('active');
-        $('.collapse.in').toggleClass('in');
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-      });
-    });
+    //   $('#sidebarCollapse').collapse('toggle');
+    // });
   }
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { GridInvoiceButtonRendererComponent } from '../grid-buttons/grid-invoice-button-renderer/grid-invoice-button-renderer.component';
-import { GridDocsButtonRendererComponent } from '../grid-buttons/grid-docs-button-renderer/grid-docs-button-renderer.component';
 import { GridStatusButtonRendererComponent } from '../grid-buttons/grid-status-button-renderer/grid-status-button-renderer.component';
 import { GridOaButtonRendererComponent } from '../grid-buttons/grid-oa-button-renderer/grid-oa-button-renderer.component';
 
@@ -22,7 +21,6 @@ export class OaResponseComponent {
     this.columnDefs = [
       {
         headerName: 'View Invoice',
-        field: 'row',
         cellRenderer: 'gridInvoiceButton',
         colId: 'params'
       },

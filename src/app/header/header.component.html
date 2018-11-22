@@ -1,25 +1,35 @@
-<!-- Page Content Holder -->
 <div id="content">
-  <div style="height:50px;background-color:white; border: 1px solid #457AB2;padding:8px; margin-bottom: 8px;margin-top:8px;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height:100%; box-shadow: 1px 1px 3px #457AB2; background-color:#E0EBF6; text-align: center;">
-
-      <a class="navbar-brand" href="#" style="color:#457AB2; font-size: 18px">{{user}}&nbsp;&nbsp;({{acctType}})</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+  <div style="padding:6px;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="border-radius:5px; border: 0.5px solid #457AB2; box-shadow: 2px 2px 10px #457AB2; background-color:#eceff1; text-align: center;">
+      <a class="navbar-brand" style="cursor: pointer; color:#457AB2; font-size: 20px; font-weight: 500;" *ngIf="loggedIn != true">Invoice To Cash</a>
+      <a class="navbar-brand" style="cursor: pointer; color:#457AB2; font-size: 18px; font-weight: 500;" *ngIf="loggedIn == true">{{lastName}},&nbsp;{{firstName}}&nbsp;
+      </a>
+      <span class="mr-auto" *ngIf="acctType.length === 1 && loggedIn == true">
+        ({{acctType[0]}})
+      </span>
+      <span class="mr-auto" *ngIf="acctType.length > 1 && loggedIn == true">
+        <select>
+          <option *ngFor="let type of acctType" [value]="type.Value">
+            {{type}}
+          </option>
+        </select>
+      </span>
+      <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
         <ul class="navbar-nav ml-auto">
-          <li>
-            <a routerLink="/statusgrid" style="color:#457AB2">Status Grid</a>
+          <li class="nav-item">
+            <a class="nav-link" style="color:#457AB2; cursor: pointer;" (click)="logOut()" *ngIf="loggedIn == true">Log Out</a>
           </li>
-          <li>
-            <a routerLink="/lineitemgrid" style="color:#457AB2; padding-left: 20px;">Line Item Grid</a>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/statusgrid" style="color:#457AB2; padding-left: 20px;" *ngIf="loggedIn == true">Status Grid</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/lineitemgrid" style="color:#457AB2; padding-left: 20px;" *ngIf="loggedIn == true">Line Item Grid</a>
           </li>
         </ul>
       </div>
-
     </nav>
   </div>
 
@@ -28,5 +38,3 @@
   <router-outlet></router-outlet>
 
 </div>
-
-

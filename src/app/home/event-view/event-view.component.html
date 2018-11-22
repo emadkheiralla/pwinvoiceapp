@@ -1,9 +1,9 @@
-<div style="margin-bottom:8px; width:100%;">
+<div style="margin-bottom:17px; width:100%;">
 
   <div class="card">
-    <div class="card-header text-center" style="background-color: #457AB2; color:white; padding:8px; border-radius: 0;">{{currDay}}</div>
-    <div class="card-body" style="height:120px; background-color: #E0EBF6; padding: 8px; border: 1px solid #457AB2; ">
-      <ag-grid-angular #agGrid enableColResize style="width: 100%;height: 103px;" class="ag-theme-blue" [enableFilter]="true" [enableSorting]="true"
+    <div class="card-header text-center" style="border: 0.5px solid #457AB2; background-color: #457AB2; color:white; border-radius: 0; height:40px; padding-top:7px;">{{currDay}}</div>
+    <div class="card-body" style="background-color: #eceff1;">
+      <ag-grid-angular #agGrid enableColResize style="width: 100%;height: 143px;" class="ag-theme-blue" [enableFilter]="true" [enableSorting]="true"
         [rowData]="rowData" [columnDefs]="columnDefs" (gridReady)="onGridReady($event)">
       </ag-grid-angular>
     </div>

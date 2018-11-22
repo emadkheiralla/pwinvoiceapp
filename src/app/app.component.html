@@ -1,9 +1,5 @@
 <div class="wrapper">
-  <app-header></app-header>
-  <app-nav-panel></app-nav-panel>
-  <!--<router-outlet></router-outlet>-->
+  <app-header ></app-header>
+  <app-nav-panel [hidden]="!loggedIn"></app-nav-panel>
 </div>
-
-
-
 

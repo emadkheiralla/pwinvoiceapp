@@ -1,8 +1,8 @@
-<div style="height: 30px; margin-bottom: 15px;">
+<div style="height: 15px; margin-bottom: 40px;">
   <button type="button" class="btn btn-primary" (click)="open(content)">Add</button>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header" style="background-color:#457AB2; border-bottom:1px solid rgba(0,0,0,.125); border-radius: 0; color: #fff">
+  <div class="modal-header" style="margin-top:-30px; background-color: #457AB2; border-bottom: 1px solid rgba(0,0,0,.125); border-radius: 0; color: #fff">
     <h6 class="modal-title" id="modal-basic-title">Add New Invoice Status Entry</h6>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true" style="color: #fff;">&times;</span>
@@ -10,16 +10,32 @@
   </div>
   <div class="modal-body" style="background-color:beige;">
     <form class="example-form">
-      <mat-form-field class="example-full-width" id="msg">
-        <input type="text" #someVar placeholder="Choose an ESN" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Search ESN" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-            {{option}}
+            {{ option }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
     </form>
-    <div class="container" [hidden]="someVar.value == ''" style="padding-top:10px;background-color: white;border:1px solid #457AB2;">
+    <!-- <form class="example-form">
+      <mat-form-field class="example-full-width" id="msg">
+        <input type="text" #someVar placeholder="Choose an ESN" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of options | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form> -->
+    <div class="container" style="padding-top:10px;background-color: white;border:1px solid #457AB2;">
+      <ng-template #loading>
+        <div class="text-center">
+          <i class="fa fa-spin fa-spinner fa-5x"></i>
+          <br> Loading events...
+        </div>
+      </ng-template>
       <ag-grid-angular #agGrid enableColResize style="width: initial; height: 120px;" class="ag-theme-blue" [enableFilter]="true"
         [enableSorting]="true" [enableColResize]="true" [debug]="true" [rowData]="modalRowData" [columnDefs]="modalColumnDefs"
         (gridReady)="onGridReady($event)">
@@ -27,119 +43,116 @@
       <form style="padding-top:10px; margin-bottom:10px; margin-top:10px; border:1px solid #9bc2e6; background-color:#E0EBF6;">
         <div class="container">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
               <label for="esn">
                 <span class="badge badge-primary">ESN</span>&nbsp;&nbsp;</label>
-              <input type="text" name="esn" id="esn" style="width:100px;">
-            </div>
-            <div class="col-md-3">
-              <label for="induction">
-                <span class="badge badge-primary">Induction</span>&nbsp;&nbsp;</label>
-              <input type="text" name="induction" id="induction" style="width:60px;">
-            </div>
-            <div class="col-md-3">
-              <label for="engine">
-                <span class="badge badge-primary">Engine</span>&nbsp;&nbsp;</label>
-              <input type="text" name="engine" id="engine" style="width:80px;">
-            </div>
-            <div class="col-md-3">
-              <label for="model">
-                <span class="badge badge-primary">Model</span>&nbsp;&nbsp;</label>
-              <input type="text" name="model" id="model" style="width:83px;">
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="engineshipdate">
-                <span class="badge badge-primary">Engine Ship Date</span>&nbsp;&nbsp;</label>
-              <input type="text" name="engineshipdate" id="engineshipdate" style="width:88px;">
-            </div>
-            <div class="col-md-4">
-              <label for="shopdat">
-                <span class="badge badge-primary">Shop/DAT</span>&nbsp;&nbsp;</label>
-              <select name="shopdat" id="shopdat" style="width:125px;"></select>
-            </div>
-            <div class="col-md-4">
-              <label for="operator">
-                <span class="badge badge-primary">Operator</span>&nbsp;&nbsp;</label>
-              <select name="operator" id="operator" style="width:127px;"></select>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="iaeworkorder">
-                <span class="badge badge-primary">IAE Work Order/SMI</span>&nbsp;&nbsp;</label>
-              <select name="iaeworkorder" id="iaeworkorder" style="width:73px;"></select>
-            </div>
-            <div class="col-md-3">
-              <label for="customercontract">
-                <span class="badge badge-primary">Customer</span>&nbsp;&nbsp;</label>
-              <select name="customercontract" id="customercontract" style="width:70px;"></select>
-            </div>
-            <div class="col-md-3" style="padding-right:0;">
-              <label for="type">
-                <span class="badge badge-primary">Invoice Type</span>&nbsp;&nbsp;</label>
-              <select name="invoicetype" id="invoicetype" style="width:70px;"></select>
+              <input type="text" name="esn" id="esn" style="width:100%;">
             </div>
             <div class="col-md-2">
-              <label for="fod" style="padding-left:22px;">
+              <label for="induction">
+                <span class="badge badge-primary">Induction</span>&nbsp;&nbsp;</label>
+              <input type="text" name="induction" id="induction" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="engine">
+                <span class="badge badge-primary">Engine</span>&nbsp;&nbsp;</label>
+              <input type="text" name="engine" id="engine" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="model">
+                <span class="badge badge-primary">Model</span>&nbsp;&nbsp;</label>
+              <input type="text" name="model" id="model" style="width:100%">
+            </div>
+            <div class="col-md-2">
+              <label for="invoicenum">
+                <span class="badge badge-primary">Invoice Number</span>&nbsp;&nbsp;</label>
+              <input type="text" name="invoicenum" id="invoicenum" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="invoicereceived">
+                <span class="badge badge-primary">Invoice Received</span>&nbsp;&nbsp;</label>
+              <input type="text" name="invoicereceived" id="invoicereceived" style="width:100%;">
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="engineshipdate">
+                <span class="badge badge-primary">Engine Ship Date</span>&nbsp;&nbsp;</label>
+              <input type="text" name="engineshipdate" id="engineshipdate" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="shopdat">
+                <span class="badge badge-primary">Shop / DAT</span>&nbsp;&nbsp;</label>
+              <select name="shopdat" id="shopdat" style="width:100%;"></select>
+            </div>
+            <div class="col-md-2">
+              <label for="operator">
+                <span class="badge badge-primary">Operator</span>&nbsp;&nbsp;</label>
+              <select name="operator" id="operator" style="width:100%;"></select>
+            </div>
+            <div class="col-md-2">
+              <label for="opcode">
+                <span class="badge badge-primary">Opr. Code</span>&nbsp;&nbsp;</label>
+              <input type="text" name="opcode" id="opcode" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="invoiceamt">
+                <span class="badge badge-primary">Invoice Amount</span>&nbsp;&nbsp;</label>
+              <input type="text" name="invoiceamt" id="invoiceamt" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="invoicecomplete">
+                <span class="badge badge-primary">Invoice Complete</span>&nbsp;&nbsp;</label>
+              <input type="text" name="invoicecomplete" id="invoicecomplete" style="width:100%;">
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="iaeworkorder">
+                <span class="badge badge-primary">IAE Work Order / SMI</span>&nbsp;&nbsp;</label>
+              <input type="text" name="iaeworkorder" id="iaeworkorder" style="width:100%;">
+            </div>
+            <div class="col-md-2">
+              <label for="customercontract">
+                <span class="badge badge-primary">Customer Contract</span>&nbsp;&nbsp;</label>
+              <select name="customercontract" id="customercontract" style="width:100%;"></select>
+            </div>
+            <div class="col-md-2" style="padding-right:0;">
+              <label for="invoicetype">
+                <span class="badge badge-primary">Invoice Type</span>&nbsp;&nbsp;</label>
+              <select name="invoicetype" id="invoicetype" style="width:100%;"></select>
+            </div>
+            <div class=col-md-2>
+              <label for="eventtype">
+                <span class="badge badge-primary">Event Type</span>&nbsp;&nbsp;</label>
+              <select name="eventtype" id="eventtype" style="width:100%;"></select>
+            </div>
+            <div class="col-md-2">
+              <label for="fod" style="padding-left: 38px;">
                 <span class="badge badge-primary">FOD</span>&nbsp;&nbsp;</label>
               <input type="checkbox" name="fod" id="fod">
+              <label for="rred" style="float: left;">
+                <span class="badge badge-primary">RR / ED</span>&nbsp;&nbsp;</label>
+              <textarea name="rred" id="rred" style="width:100%;"></textarea>
             </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="iaeworkorder">
-                <span class="badge badge-primary">Event Type</span>&nbsp;&nbsp;</label>
-              <select name="eventtype" id="eventtype" style="width:70px;"></select>
-              <label for="fod" style="padding-left:5px;">
+            <div class="col-md-2">
+              <label for="pc" style="padding-left: 40px;">
                 <span class="badge badge-primary">CP?</span>&nbsp;&nbsp;</label>
               <input type="checkbox" name="pc" id="pc">
-              <label for="iaeworkorder">
-                <span class="badge badge-primary">Invoice Received</span>&nbsp;&nbsp;</label>
-              <input type="text" name="invoicereceived" id="invoicereceived" style="width:90px;">
-            </div>
-            <div class="col-md-4">
-              <label for="customercontract" style="float:left;">
+              <label for="notes" style="float: left;">
                 <span class="badge badge-primary">Notes</span>&nbsp;&nbsp;</label>
-              <textarea name="notes" id="notes" style="width:70%;"></textarea>
-            </div>
-            <div class="col-md-4">
-              <label for="customercontract" style="float:left;">
-                <span class="badge badge-primary">RR/ED</span>&nbsp;&nbsp;</label>
-              <textarea name="rred" id="rred" style="width:70%;"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="iaeworkorder">
-                <span class="badge badge-primary">Invoice Complete</span>&nbsp;&nbsp;</label>
-              <select name="invoicecomplete" id="invoicecomplete" style="width:86px;"></select>
-            </div>
-            <div class="col-md-4">
-              <label for="customercontract">
-                <span class="badge badge-primary">Invoice Amount</span>&nbsp;&nbsp;</label>
-              <select name="invoiceamt" id="invoiceamt" style="width:87px;"></select>
-            </div>
-            <div class="col-md-4">
-              <label for="type">
-                <span class="badge badge-primary">Invoice Number</span>&nbsp;&nbsp;</label>
-              <select name="invoicenum" id="invoicenum" style="width:87px;"></select>
+              <textarea name="notes" id="notes" style="width:100%;"></textarea>
             </div>
           </div>
         </div>
       </form>
     </div>
   </div>
-  <div class="modal-footer" style="background-color:beige; border-top:1px solid rgba(0,0,0,.125);">
+  <div class="modal-footer" style="background-color:beige; border-top:1px solid rgba(0,0,0,.125); padding:6px;">
     <button type="button" class="btn" (click)="c('Save click')" style="background-color: #457AB2; color:#fff; border:1px solid rgba(0,0,0,.125);">Save</button>
   </div>
 </ng-template>

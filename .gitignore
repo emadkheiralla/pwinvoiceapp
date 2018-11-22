@@ -7,6 +7,10 @@
 
 # dependencies
 /node_modules
+!/node_modules/angular-calendar
+!/node_modules/bootstrap
+!/node_modules/ag-grid
+
 
 # IDEs and editors
 /.idea

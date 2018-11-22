@@ -31,7 +31,6 @@ import { PayRequestAccountingComponent } from './pay-request-accounting/pay-requ
 import { OaResponseComponent } from './oa-response/oa-response.component';
 import { OaFleetComponent } from './oa-fleet/oa-fleet.component';
 import { AllItemsComponent } from './all-items/all-items.component';
-import { DataService } from './home/data.service';
 import { GridInvoiceButtonRendererComponent } from './grid-buttons/grid-invoice-button-renderer/grid-invoice-button-renderer.component';
 import { GridStatusButtonRendererComponent } from './grid-buttons/grid-status-button-renderer/grid-status-button-renderer.component';
 import { GridDocsButtonRendererComponent } from './grid-buttons/grid-docs-button-renderer/grid-docs-button-renderer.component';
@@ -40,10 +39,15 @@ import { GridAcceptRejectButtonRendererComponent } from './grid-buttons/grid-acc
 import { GridTurnbackButtonRendererComponent } from './grid-buttons/grid-turnback-button-renderer/grid-turnback-button-renderer.component';
 import { GridOaButtonRendererComponent } from './grid-buttons/grid-oa-button-renderer/grid-oa-button-renderer.component';
 import { AddModalComponent } from './status-grid/add-modal/add-modal.component';
-
+import { LoginPageComponent } from './login-page/login-page.component';
+import { DataService } from './home/data.service';
+import { LoginService } from './login-page/login.service';
+import { EsnService } from './status-grid/add-modal/esn.service';
+import { GetuserService } from './login-page/getuser.service';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginPageComponent },
+  { path: 'loginpage', component: LoginPageComponent },
   { path: 'home', component: HomeComponent },
   { path: 'invoicereceipt', component: InvoiceReceiptReviewComponent },
   { path: 'invoicereview', component: InvoiceReviewComponent },
@@ -83,7 +87,8 @@ const appRoutes: Routes = [
     GridAcceptRejectButtonRendererComponent,
     GridTurnbackButtonRendererComponent,
     GridOaButtonRendererComponent,
-    AddModalComponent
+    AddModalComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +107,7 @@ const appRoutes: Routes = [
       GridStatusButtonRendererComponent, GridDocsButtonRendererComponent, GridAcceptRejectButtonRendererComponent,
       GridTurnbackButtonRendererComponent, GridOaButtonRendererComponent])
   ],
-  providers: [DataService],
+  providers: [DataService, LoginService, EsnService, GetuserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

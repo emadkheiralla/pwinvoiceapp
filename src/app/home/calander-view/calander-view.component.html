@@ -1,29 +1,7 @@
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border: 1px solid #457AB2; width:100%; background-color: #E0EBF6;padding-bottom:8px;">
-  <!--<ng-template #modalContent let-close="close">-->
-    <!--<div class="modal-header">-->
-      <!--<h5 class="modal-title">Event action occurred</h5>-->
-      <!--<button type="button" class="close" (click)="close">-->
-        <!--<span aria-hidden="true">&times;</span>-->
-      <!--</button>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-      <!--<div>-->
-        <!--Action:-->
-        <!--<pre>{{ modalData?.action }}</pre>-->
-      <!--</div>-->
-      <!--<div>-->
-        <!--Event:-->
-        <!--<pre>{{ modalData?.event | json }}</pre>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-      <!--<button type="button" class="btn btn-outline-secondary" (click)="close">OK</button>-->
-    <!--</div>-->
-  <!--</ng-template>-->
-
-  <div class="row text-center" style="margin-bottom:-11px; background-color: #457AB2;">
+<div class="" style="border:1px solid #457AB2; box-shadow: 3px 3px 10px #457AB2; background-color: #eceff1;padding-bottom:8px;">
+  <div class="row text-center" style="margin-bottom:-16px; background-color: #457AB2;margin-left: 0; margin-right: 0;">
     <div class="col-md-4">
-      <div class="btn-group">
+      <div class="btn-group" style="height: 100%;">
         <div
           class="btn btn-primary"
           mwlCalendarPreviousView
@@ -85,14 +63,14 @@
     </div>
   </ng-template>
 
-  <ng-template #customCellTemplate let-day="day" let-locale="locale" style="min-height: 2px">
+  <ng-template #customCellTemplate let-day="day" let-locale="locale">
     <div class="cal-cell-top">
       <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
       <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
     </div>
   </ng-template>
 
-  <div *ngIf="asyncEvents$ | async; else loading; let events">
+  <div *ngIf="asyncEvents$ | async; else loading; let events" style="margin-left: 8px; margin-right:8px;">
     <div [ngSwitch]="view" style="width:100%;overflow: auto;background-color: #F6F6F6;">
       <mwl-calendar-month-view
         *ngSwitchCase="'month'"

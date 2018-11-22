@@ -1,13 +1,14 @@
-import { Component, OnInit} from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
-import {map, startWith} from 'rxjs/operators';
-
-
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { EsnService } from './esn.service';
+import 'rxjs/add/operator/debounceTime';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-modal',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.css']
 })
@@ -15,44 +16,45 @@ export class AddModalComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
 
+
   myControl = new FormControl();
-  options: string[] = ['V15159', '770121'];
+  options = [];
   filteredOptions: Observable<string[]>;
 
   closeResult = '';
 
-    modalColumnDefs = [
+  modalColumnDefs = [
     {
       headerName: 'ESN',
-      field: 'esn',
+      field: 'esn'
     },
     {
       headerName: 'Induction Date',
-      field: 'inductionDate',
+      field: 'inductionDate'
     },
     {
       headerName: 'Removal Date',
-      field: 'removalDate',
+      field: 'removalDate'
     },
     {
       headerName: 'Operator Code',
-      field: 'operatorCode',
+      field: 'operatorCode'
     },
     {
       headerName: 'Operator Name',
-      field: 'operatorName',
+      field: 'operatorName'
     },
     {
       headerName: 'Ship Date',
-      field: 'shipDate',
+      field: 'shipDate'
     },
     {
       headerName: 'Shop Code',
-      field: 'shopCode',
+      field: 'shopCode'
     },
     {
       headerName: 'Shop Name',
-      field: 'shopName',
+      field: 'shopName'
     }
   ];
 
@@ -68,7 +70,7 @@ export class AddModalComponent implements OnInit {
   ];
 
   open(content) {
-    this.modalService.open(content, {size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { size: 'lg', ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -81,24 +83,30 @@ export class AddModalComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
     params.api.sizeColumnsToFit();
   }
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private esnService: EsnService) {
+
+  }
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+    this.esnService.currentEsn.subscribe(esn => this.options = esn);
+    this.esnService.search_word().subscribe(response => {
+      console.log('ESN(s) Loaded');
+    });
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
   }
 
   private _filter(value: string): string[] {
